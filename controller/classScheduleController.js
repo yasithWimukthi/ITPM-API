@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const ClassSchedule = require("../models/classSchedule")
 
-//router for add an employee
+//router for add an class shedule
 router.post("/classSchedule", async (req, res) => {
 
     const className = req.body.className;
@@ -30,6 +30,19 @@ router.post("/classSchedule", async (req, res) => {
         console.log("error while saving");
         return res.status(500).send({ status: "Internal Server Error" });
     }
+});
+
+//router for retrieve and send all the ClassSchedule records
+router.get("/classSchedule", async (req, res) => {
+
+    try {
+        const response = await ClassSchedule.find();
+        return res.status(200).send({ status: "Success", data: response });
+    } catch (error) {
+        console.log("Something went wrong while connecting to DB");
+        return { ok: false };
+    }
+
 });
 
 module.exports = router;
