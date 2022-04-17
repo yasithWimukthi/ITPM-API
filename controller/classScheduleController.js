@@ -67,14 +67,15 @@ router.put("/classSchedule/:Id", async (req, res) => {
 
 
     if (_id) {
-        const response = await ClassSchedule.findOneAndUpdate({ _id: _id }, payload).then(() => {
-            return res.status(200).send({ status: "Class Schedule Successfully updated!" });
-        }).catch((err) => {
-            // console.log(err);
+        try {
+            await ClassSchedule.findOneAndUpdate({ _id: _id }, payload).then(() => {
+                return res.status(200).send({ status: "Class Schedule Successfully updated!" });
+            })
+        } catch (err) {
+            console.log(err);
             return res.status(500).send({ status: "Internal Server Error" });
-        })
+        }
     }
-    return res.status(400).send({ status: "Invalid Request" });
 });
 
 module.exports = router;
