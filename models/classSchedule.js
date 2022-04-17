@@ -7,7 +7,7 @@ const classScheduleSchema = new Schema({
     staffName: { type: String },
     location: { type: String },
     fee: { type: Number },
-    startTIme: { type: String },
+    startTime: { type: String },
     endTime: { type: String },
 });
 

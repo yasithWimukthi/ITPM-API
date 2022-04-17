@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const ClassSchedule = require("../models/classSchedule")
 
-//router for add an class shedule
+//router for add a class shedule
 router.post("/classSchedule", async (req, res) => {
 
     const className = req.body.className;
@@ -43,6 +43,38 @@ router.get("/classSchedule", async (req, res) => {
         return { ok: false };
     }
 
+});
+
+//router for update a class shedule
+router.put("/classSchedule/:Id", async (req, res) => {
+    const _id = req.params.Id;
+    const className = req.body.className;
+    const staffName = req.body.staffName;
+    const location = req.body.location;
+    const fee = req.body.fee;
+    const startTime = req.body.startTime;
+    const endTime = req.body.endTime;
+
+    const payload = {
+        className,
+        staffName,
+        location,
+        fee,
+        startTime,
+        endTime,
+    }
+
+
+
+    if (_id) {
+        const response = await ClassSchedule.findOneAndUpdate({ _id: _id }, payload).then(() => {
+            return res.status(200).send({ status: "Class Schedule Successfully updated!" });
+        }).catch((err) => {
+            // console.log(err);
+            return res.status(500).send({ status: "Internal Server Error" });
+        })
+    }
+    return res.status(400).send({ status: "Invalid Request" });
 });
 
 module.exports = router;
